@@ -59,7 +59,7 @@ class AppWrapper {
   }
 
   asBinary(i, n=this.n) {
-    const padding = '0' * n;
+    const padding = '0'.repeat(n);
     const padded = padding + i.toString(2);
     return padded.slice(padded.length - n);
   }
@@ -70,12 +70,21 @@ class AppWrapper {
   formatAmplitude(a) {
     if(ONE_OVER_SQRT_2 - ERR_THRESH < a && a < ONE_OVER_SQRT_2 + ERR_THRESH)
       return '1/√2';
+    if(ONE_OVER_TWO_SQRTS_2 - ERR_THRESH < a && a < ONE_OVER_TWO_SQRTS_2 + ERR_THRESH)
+      return '1/2√2';
+    if(ONE_OVER_FOUR_SQRTS_2 - ERR_THRESH < a && a < ONE_OVER_FOUR_SQRTS_2 + ERR_THRESH)
+      return '1/4√2';
     if(0.5 - ERR_THRESH < a && a < 0.5 + ERR_THRESH)
       return '1/2';
+    if(0.25 - ERR_THRESH < a && a < 0.25 + ERR_THRESH)
+      return '1/4';
     if(a == 1)
         return '';
     return a;
   }
 }
+
+const ONE_OVER_TWO_SQRTS_2 = 1/(Math.sqrt(2) * 2);
+const ONE_OVER_FOUR_SQRTS_2 = 1/(Math.sqrt(2) * 4);
 
 module.exports = AppWrapper;
