@@ -39,6 +39,9 @@ class AppWrapper {
         case 'cswap':
           this.register.cswap(instr[1], instr[2], instr[3]);
           break;
+        case 'measure':
+          this.register.measure();
+          break;
       }
     });
   }

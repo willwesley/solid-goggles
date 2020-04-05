@@ -385,14 +385,31 @@ describe('Register', () => {
   });
 
   describe('MEASURE operation', () => {
-    it('rotates |01010> to |01011> when i = 4, j = 2, k = 5', () => {
-      const reg = new Register();
-      reg.not(2);
-      reg.not(4);
-
-      reg.ccnot(4, 2, 5);
-
-      expect(reg.phi.valueOf()).toEqual([...Array(32).keys()]
-        .map(i => (i == 11) ? [1] : [0]))
+    let oldRandom = Math.random;
+    beforeEach(() => {
+      Math.random = jasmine.createSpy();
     });
-  });});
+    afterEach(() => {
+      Math.random = oldRandom;
+    });
+    it('collapses 1/sqrt(2)|0> + 1/sqrt(2)|1> to something', () => {
+      Math.random.and.returnValue(0);
+      const reg = new Register(1);
+      reg.hadamard(1);
+
+      reg.measure();
+
+      expect(reg.phi.valueOf()).toEqual([[1], [0]])
+    });
+
+    it('collapses 1/sqrt(2)|0> + 1/sqrt(2)|1> to something else', () => {
+      Math.random.and.returnValue(1);
+      const reg = new Register(1);
+      reg.hadamard(1);
+
+      reg.measure();
+
+      expect(reg.phi.valueOf()).toEqual([[0], [1]])
+    });
+  });
+});

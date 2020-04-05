@@ -197,4 +197,47 @@ describe('App wrapper', () => {
       expect(readout).toEqual('1/2|00> + 1/2|01> - 1/2|10> + 1/2|11>');
     });
   });
+
+  describe('measurement', () => {
+    let oldRandom = Math.random;
+    beforeEach(() => {
+      Math.random = jasmine.createSpy();
+    });
+    afterEach(() => {
+      Math.random = oldRandom;
+    });
+    it('collapses neatly', () => {
+      Math.random.and.returnValue(.2);
+      const app = new AppWrapper(2);
+      app.circuit = [
+        ['hadamard', '1'],
+        ['cnot', '1', '2'],
+        ['not', '2'],
+        ['hadamard', '1'],
+        ['measure']
+      ];
+      app.simulate();
+
+      const readout = app.printRegister();
+
+      expect(readout).toEqual('|00>');
+    });
+
+    it('collapses nicely', () => {
+      Math.random.and.returnValue(.6);
+      const app = new AppWrapper(2);
+      app.circuit = [
+        ['hadamard', '1'],
+        ['cnot', '1', '2'],
+        ['not', '2'],
+        ['hadamard', '1'],
+        ['measure']
+      ];
+      app.simulate();
+
+      const readout = app.printRegister();
+
+      expect(readout).toEqual('|10>');
+    });
+  });
 });

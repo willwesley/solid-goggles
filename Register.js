@@ -139,6 +139,20 @@ class Register {
     );
   }
 
+  measure() {
+    const r = Math.random();
+    let bucketStart = 0;
+    this.phi = this.phi.map(a => {
+      let ret = 0;
+      const bucketEnd = bucketStart + a*a + ERR_THRESH;
+      if(bucketStart <= r && r < bucketEnd) {
+        ret = 1;
+      }
+      bucketStart = bucketEnd;
+      return ret;
+    });
+  }
+
   /**
    * creates an operation on the jth qubit of an appropriate size
    * conditioned on the ith qubit
