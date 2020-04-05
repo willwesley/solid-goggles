@@ -179,6 +179,7 @@ describe('Register', () => {
   describe('CNOT operation', () => {
     it('rotates |00> to |00> when i = 1, j = 2', () => {
       const reg = new Register(2);
+      console.log(reg.projectedOperation(2, 1, X).valueOf())
 
       reg.cnot(1, 2);
 
@@ -200,6 +201,25 @@ describe('Register', () => {
       reg.cnot(1, 2);
 
       expect(reg.phi.valueOf()).toEqual([[0], [0], [1], [0]])
+    });
+    it('rotates |01> to |11> when i = 2, j = 1', () => {
+      const reg = new Register(2);
+      reg.not(2);
+      expect(reg.phi.valueOf()).toEqual([[0], [1], [0], [0]])
+
+      reg.cnot(2, 1);
+
+      expect(reg.phi.valueOf()).toEqual([[0], [0], [0], [1]])
+    });
+    it('rotates |11> to |01> when i = 2, j = 1', () => {
+      const reg = new Register(2);
+      reg.not(1);
+      reg.not(2);
+      expect(reg.phi.valueOf()).toEqual([[0], [0], [0], [1]])
+
+      reg.cnot(2, 1);
+
+      expect(reg.phi.valueOf()).toEqual([[0], [1], [0], [0]])
     });
     it('rotates |100> to |101> when i = 1, j = 3', () => {
       const reg = new Register(3);

@@ -18,4 +18,4 @@ The circuit description is a file with on gate instruction per line. A gate inst
 - `swap i j`
 - `ccnot i j k` ((Toffoli) `cnot j k` conditioned on *i*)
 - `cswap i j k` (`swap j k` conditioned on *i*)
-
+- `measure` randomly picks one of the amplitudes and collapses all else
