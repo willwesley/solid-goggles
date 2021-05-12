@@ -14,7 +14,7 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "mathjs": "^6.6.1",
+    "mathjs": "^7.5.1",
     "mock-require": "^3.0.3"
   }
 }
